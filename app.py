@@ -4,12 +4,20 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def index():  # put application's code here
+def index():
     return render_template("index.html", title="Home")
 
 @app.route('/history')
-def history():  # put application's code here
+def history():  
     return render_template("history.html", title="History of Ngunnawal")
+
+@app.route('/contact')
+def contact(): 
+    return render_template("contact.html", title="Contact Page")
+
+@app.route('/gallery')
+def gallery():
+    return render_template("gallery.html", title="Photo Gallery")
 
 
 
