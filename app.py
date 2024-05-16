@@ -12,13 +12,23 @@ login.login_view = 'login'
 from forms import ContactForm, LoginForm, RegistrationForm
 from models import Contact, User
 
+# Error Routes
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html", user=current_user), 404
+
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template("500.html", user=current_user), 500
+
 @app.route('/')
 def index():
-    return render_template("index.html", title="Home")
+    return render_template("index.html", title="Home", user=current_user)
 
 @app.route('/history')
 def history():  
-    return render_template("history.html", title="History of Ngunnawal")
+    return render_template("history.html", title="History of Ngunnawal", user=current_user)
 
 @app.route("/contact", methods=["POST", "GET"])
 def contact():
@@ -27,13 +37,13 @@ def contact():
         new_contact = Contact(name=form.name.data, email=form.email.data, message=form.message.data)
         db.session.add(new_contact)
         db.session.commit()
-        # flash("Your message has been sent to administrators.")
+        flash("Your message has been sent!")
         return redirect(url_for("homepage"))
     return render_template("contact.html", title="Contact Us", form=form, user=current_user)
 
 @app.route('/gallery')
 def gallery():
-    return render_template("gallery.html", title="Photo Gallery")
+    return render_template("gallery.html", title="Photo Gallery", user=current_user)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -44,8 +54,9 @@ def register():
         new_user.set_password(form.password.data)
         db.session.add(new_user)
         db.session.commit()
+        flash("Successfully registered!")
         return redirect(url_for("homepage"))
-    return render_template("registration.html", title="User Registration", form=form)
+    return render_template("registration.html", title="User Registration", form=form, user=current_user)
 
 
 
@@ -59,12 +70,14 @@ def login():
             # User has been authenticated
             login_user(user)
             print("DEBUG: Login Successful")
+            flash("Success!")
             return redirect(url_for("homepage"))
         else:
             print("DEBUG: Login Failed")
             # Username or password incorrect
+            flash("Username or passphrase are incorrect.")
             return redirect(url_for("login"))
-    return render_template("login.html", title="Login", form=form)
+    return render_template("login.html", title="Login", form=form, user=current_user)
 
 @app.route('/passwordreset', methods=['GET', 'POST'])
 @login_required
