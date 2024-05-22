@@ -22,6 +22,8 @@ def page_not_found(e):
 def internal_server_error(e):
     return render_template("500.html", user=current_user), 500
 
+
+
 @app.route('/')
 def index():
     return render_template("index.html", title="Home", user=current_user)
@@ -91,6 +93,31 @@ def reset_password():
         return redirect(url_for('homepage'))
     return render_template("passwordreset.html", title='Reset Password', form=form, user=current_user)
 
+@app.route('/contact_messages')
+@login_required
+def view_contact_messages():
+    if current_user.is_admin():
+        contact_messages = Contact.query.all()
+        return render_template("contactMessages.html", title="Contact Messages", user=current_user, messages=contact_messages)
+    else:
+        return redirect(url_for("homepage"))
+        
+@app.route('/admin/list_all_users')
+@login_required
+def list_all_users():
+    if current_user.is_admin():
+        all_users = User.query.all()
+        return render_template("listAllUsers.html", title="All Active Users", user=current_user, users=all_users)
+    else:
+        flash("You must be an administrator to access this functionality.")
+        return redirect(url_for("homepage"))
 
+@app.route('/admin/user_enable/<userid>')
+@login_required
+def user_enable(userid):
+    user = User.query.filter_by(id=userid).first()
+    user.active = not user.active
+    db.session.commit()
+    return redirect(url_for("list_all_users"))
 if __name__ == '__main__':
     app.run()

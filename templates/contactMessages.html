@@ -1,0 +1,25 @@
+{% extends "base.html"%}
+
+{% block rowOneContent%}
+    <h1 class="mycss-text-light">Welcome to PC Builds!</h1>
+{% endblock %}
+
+{% block rowTwoColOneContent%}
+    <h2 class="mycss-text-light">About PC Builds</h2>
+{% endblock %}
+
+{% block rowTwoColTwoContent%}
+    <div class="container-fluid">
+        {% for message in messages %}
+            <div class="row">
+                <div class="col-3"> {{ message.name }}</div>
+                <div class="col-3"> {{ message.email }}</div>
+                <div class="col-3"> {{ message.message }}</div>
+                <div class="col-3"> {{ message.dateSubmitted.strftime('%H:%M - %d/%m/%Y') after the datetime }}</div>
+
+
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+

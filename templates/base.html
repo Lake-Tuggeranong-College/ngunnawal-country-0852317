@@ -11,7 +11,7 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#">PC Top Builds</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -27,7 +27,12 @@
           {% else %}
           <a class="nav-link" href="/logout">Logout</a>
           <a class="nav-link" href="/passwordreset">Password Reset</a>
+          {% if user.is_admin() %}
+          <li><a class="nav-link" href="/contact_messages">Contact Messages</a></li>
+          <li><a class="nav-link" href="/admin/list_all_users">List all Users</a></li>
           {% endif %}
+          {% endif %}
+
         </div>
       </div>
     </div>
