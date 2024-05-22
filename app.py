@@ -22,8 +22,6 @@ def page_not_found(e):
 def internal_server_error(e):
     return render_template("500.html", user=current_user), 500
 
-
-
 @app.route('/')
 def index():
     return render_template("index.html", title="Home", user=current_user)
@@ -73,13 +71,19 @@ def login():
             login_user(user)
             print("DEBUG: Login Successful")
             flash("Success!")
-            return redirect(url_for("homepage"))
+            return redirect(url_for("index"))
         else:
             print("DEBUG: Login Failed")
             # Username or password incorrect
             flash("Username or passphrase are incorrect.")
             return redirect(url_for("login"))
     return render_template("login.html", title="Login", form=form, user=current_user)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for("index"))
+
 
 @app.route('/passwordreset', methods=['GET', 'POST'])
 @login_required
