@@ -21,3 +21,13 @@ body {
 .p{
     color: #2ccbb4;
 }
+
+.flashes {
+    padding: 12px;
+    border-radius: 3px;
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+    border: 2px solid orange;
+    background-color: yellow;
+    color: black;
+}
