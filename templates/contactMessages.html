@@ -12,7 +12,7 @@
     <div class="container-fluid">
         {% for message in messages %}
             <div class="row">
-                <div class="col-3"> {{ message.name }}</div>
+                <div class="col-3"> {{ message.content }}</div>
                 <div class="col-3"> {{ message.email }}</div>
                 <div class="col-3"> {{ message.message }}</div>
                 <div class="col-3"> {{ message.dateSubmitted.strftime('%H:%M - %d/%m/%Y') after the datetime }}</div>
